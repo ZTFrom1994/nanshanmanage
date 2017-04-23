@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.ClubMemberMapper">
+
+	<select id="getClubMemberById" parameterType="java.lang.String"
+		resultMap="clubMemberResultMap" resultType="ClubMember">
+		select * from club_members
+		where
+		student_id=#{id} 
+     </select>
+
+	<select id="getClubMembersByPage" resultMap="clubMemberResultMap">
+		select * from
+		club_members limit #{0},#{1} 
+     </select>
+	<select id="getClubStudentsBykeyWord" resultMap="clubMemberResultMap">
+		select * from
+		club_members where 
+		name like CONCAT('%',#{0},'%') or 
+		student_id like CONCAT('%',#{0},'%') or 
+		from_club_name like CONCAT('%',#{0},'%')
+		limit #{1},#{2} 
+     </select>
+
+	<insert id="addClubMember" parameterType="ClubMember">
+		insert into
+		club_members(student_id,name,from_academy,from_club_name,phone_number,sex,position)
+		values(#{stuId},#{name},#{fromAcademy},#{fromClubName},#{phoneNumber},#{sex},#{position})
+	</insert>
+
+	<update id="updateClubMember" parameterType="ClubMember">
+		update club_members
+		set
+		name = #{name} ,from_academy = #{fromAcademy},phone_number =
+		#{phoneNumber} , sex = #{sex} ,position = #{position},from_club_name =
+		#{fromClubName} where student_id = #{stuId} 
+	</update>
+	<delete id="deleteClubMemberById" parameterType="java.lang.String">
+		delete from
+		club_members where student_id = #{0}
+	</delete>
+	<select id="getClubMembersCount" resultType="int">
+		select count(*) from
+		club_members
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from 
+		club_members where 
+		name like CONCAT('%',#{0},'%') or 
+		student_id like CONCAT('%',#{0},'%') or 
+		from_club_name like CONCAT('%',#{0},'%')
+	</select>
+
+	<resultMap type="ClubMember" id="clubMemberResultMap">
+		<id property="stuId" column="student_id" />
+		<result property="fromAcademy" column="from_academy" />
+		<result property="fromClubName" column="from_club_name" />
+		<result property="phoneNumber" column="phone_number" />
+		<result property="sex" column="sex" />
+		<result property="name" column="name" />
+		<result property="position" column="position" />
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

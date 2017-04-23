@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.ClubActivityMapper">
+
+	<select id="getClubActivityById"  resultMap="clubActivityResultMap"
+		resultType="ClubActivity" >
+		select * from club_activities where activity_id=#{0} 
+     </select>
+
+	<select id="getClubActivitiesByPage" resultMap="clubActivityResultMap">
+		select * from club_activities limit #{0},#{1} 
+     </select>
+
+	<select id="getClubActivitiesCount" resultType="int">
+		select count(*) from club_activities
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from 
+		 club_activities 
+		 where activity_name like CONCAT('%',#{0},'%') or activity_from_club like CONCAT('%',#{0},'%')
+		
+	</select>
+	<select id="getClubActivityByKeyWord" resultMap="clubActivityResultMap">
+		select *
+		from club_activities  where  activity_name like
+		CONCAT('%',#{0},'%') or activity_from_club like CONCAT('%',#{0},'%')
+		 limit #{1},#{2} 
+     </select>
+	<insert id="addClubActivity" parameterType="ClubActivity">
+		insert into
+		club_activities(
+				activity_name,
+				activity_start_time,
+				activity_end_time,
+				activity_from_club,
+				activity_leader_name,
+				activity_hold_place,
+				activity_form,
+				activity_contact,
+				is_borrowed,
+				activity_introduction
+				)
+		values(
+				#{activityName},
+				#{activityStartTime},
+				#{activityEndTime},
+				#{activityFromClub},
+				#{activityLeaderName},
+				#{activityHoldPlace},
+				#{activityForm},
+				#{activityContact},
+				#{isBorrowed},
+				#{activityIntroduction})
+	</insert>
+	<update id="updateClubActivity" parameterType="ClubActivity">
+		update club_activities set
+				activity_name=#{activityName},
+				activity_start_time=#{activityStartTime},
+				activity_end_time=#{activityEndTime},
+				activity_from_club=#{activityFromClub},
+				activity_leader_name=#{activityLeaderName},
+				activity_hold_place=#{activityHoldPlace},
+				activity_form=#{activityForm},
+				activity_contact=#{activityContact},
+				is_borrowed=#{isBorrowed},
+				activity_introduction=#{activityIntroduction}
+		 where activity_id = #{activityId}
+	</update>
+	<delete id="deleteClubActivityById" parameterType="java.lang.String">
+		delete from club_activities where activity_id = #{id}
+	</delete>
+	<select id="getActivityForm" resultType="java.lang.String">
+		select form_name from activity_forms
+	</select>
+	<resultMap type="ClubActivity" id="clubActivityResultMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="activityId" column="activity_id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="activityName" column="activity_name" />
+		<result property="activityStartTime" column="activity_start_time" />
+		<result property="activityEndTime" column="activity_end_time" />
+		<result property="activityFromClub" column="activity_from_club" />
+		<result property="activityLeaderName" column="activity_leader_name" />
+		<result property="activityHoldPlace" column="activity_hold_place" />
+		<result property="activityContact" column="activity_contact" />
+		<result property="activityForm" column="activity_form" />
+		<result property="isBorrowed" column="is_borrowed" />
+		<result property="activityIntroduction" column="activity_introduction" />
+		
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.AuthMapper">
+
+	<select id="getAuthByName"  resultMap="authResultMap"
+		resultType="Auth" >
+		select * from system_auth where auth_name=#{0} 
+     </select>
+	<select id="getAuthById"  resultMap="authResultMap"
+		resultType="Auth" >
+		select * from system_auth where auth_id=#{0} 
+     </select>
+	<select id="getAllAuths"  resultMap="authResultMap">
+		select * from system_auth
+	</select>
+	<select id="getAuthsByPage" resultMap="authResultMap">
+		select * from system_auth limit #{0},#{1} 
+     </select>
+	<select id="getAuthCount" resultType="int">
+		select count(*) from system_auth
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from 
+		 system_auth where auth_name like CONCAT('%',#{0},'%') 
+	</select>
+	<select id="getAuthsByKeyWord" resultMap="authResultMap">
+		select * from  system_auth
+		 where auth_name like CONCAT('%',#{0},'%') 
+		 limit
+		#{1},#{2} 
+     </select>
+	<insert id="addAuth" parameterType="Auth">
+		insert into
+		     system_auth(
+		   		auth_name,
+		   		add_auth,
+		   		delete_auth,
+		   		update_auth,
+		   		search_auth)
+			 values(
+			 	#{authName},
+			 	#{addAuth},
+			 	#{deleteAuth},
+			 	#{updateAuth},
+			 	#{searchAuth})
+	</insert>
+	<update id="updateAuth" parameterType="Auth">
+		update system_auth set
+			auth_name=#{authName},
+			add_auth=#{addAuth},
+			delete_auth=#{deleteAuth},
+			update_auth=#{updateAuth},
+			search_auth=#{searchAuth}
+		where auth_id = #{authId}
+	</update>
+	<delete id="deleteAuthById" parameterType="java.lang.String">
+		delete from system_auth where auth_id = #{0}
+	</delete>
+	
+	<resultMap type="Auth" id="authResultMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="authId" column="auth_id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="authName" column="auth_name" />
+		<result property="addAuth" column="add_auth" />
+		<result property="deleteAuth" column="delete_auth" />
+		<result property="updateAuth" column="update_auth" />
+		<result property="searchAuth" column="search_auth" />
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

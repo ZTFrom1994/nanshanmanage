@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.GroundApplicationRecordMapper">
+
+	<select id="getRecordById" resultMap="groundApplicationRecordResultMap"
+		resultType="EquipmentRecordHistory">
+		select * from ground g,ground_application_record gar ,users u 
+			where 
+				gar.operator_id = u.id and 
+				gar.ground_id = g.ground_id and 
+				gar.record_id = #{0} 
+     </select>
+	<select id="getRecordsByPage" resultMap="groundApplicationRecordResultMap" parameterType="int">
+		select * from ground g,ground_application_record gar ,users u 
+			where 
+				gar.operator_id = u.id and 
+				gar.ground_id = g.ground_id 
+			 limit #{0},#{1} 
+     </select>
+	<select id="getRecordCount" resultType="int">
+		select count(*) from ground_application_record
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from ground g,ground_application_record gar ,users u 
+			where 
+				gar.operator_id = u.id and 
+				gar.ground_id = g.ground_id and  
+			( 
+				u.username like CONCAT('%',#{0},'%') or
+ 		        gar.using_unit like CONCAT('%',#{0},'%') or
+ 		        g.ground_id like CONCAT('%',#{0},'%')
+		 	) 
+	</select>
+	<select id="getRecordsByKeyWord" resultMap="groundApplicationRecordResultMap" >
+		select count(*) from ground g,ground_application_record gar ,users u 
+			where 
+				gar.operator_id = u.id and 
+				gar.ground_id = g.ground_id and  
+			( 
+				u.username like CONCAT('%',#{0},'%') or
+ 		        gar.using_unit like CONCAT('%',#{0},'%') or
+ 		        g.ground_id like CONCAT('%',#{0},'%')
+		 	) 
+		 limit #{1},#{2} 
+     </select>
+	<insert id="addRecord" parameterType="GroundApplicationRecord"  useGeneratedKeys="true" keyProperty="id">
+		insert into
+		er_history(
+				operator_id,
+				operate_time,
+				start_time,
+				end_time,
+				gar_using_unit,
+				contact,
+				petitioner,
+				using_for,
+				ground_id
+				)
+		values(
+				#{operator.id},
+				#{operateTime},
+				#{startTime},
+				#{endTime},
+				#{usingUnit},
+				#{contact},
+				#{petitioner},
+				#{usingFor},
+				#{ground.id}
+		)
+	</insert>
+	<resultMap type="GroundApplicationRecord" id="groundApplicationRecordResultMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="id" column="record_id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="operateTime" column="operate_time" />
+		<result property="startTime" column="start_time" /> 
+		<result property="endTime" column="end_time" />
+		<result property="usingUnit" column="gar_using_unit" />
+		<result property="contact" column="contact" />
+		<result property="petitioner" column="petitioner" />
+		<result property="usingFor" column="using_for" />
+		<association property="ground" column="ground_id" javaType="Ground"> 
+			<id property="id" column="ground_id" />
+			<result property="groundName" column="ground_name" />
+			<result property="addTime" column="add_time" />
+			<result property="status" column="status" />
+			<result property="usingUnit" column="using_unit" />
+		</association>
+		<association property="operator" column="operator_id" javaType="User"> 
+			<id property="id" column="id" />
+			<result property="username" column="username" />
+			<result property="password" column="password" />
+			<result property="registerDate" column="register_date" />
+		</association>
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

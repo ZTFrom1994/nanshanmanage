@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.ClubMapper">
+
+	<select id="getClubById"  resultMap="clubResultMap"
+		resultType="Club" >
+		select * from clubs where club_id=#{0} 
+     </select>
+
+	<select id="getClubsByPage" resultMap="clubResultMap">
+		select * from clubs ,
+		club_members where leader_stu_id = student_id limit
+		#{0},#{1} 
+     </select>
+
+	<select id="getClubCount" resultType="int">
+		select count(*) from clubs
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from 
+		 clubs ,club_members 
+		 where leader_stu_id = student_id and(
+		 club_name like CONCAT('%',#{0},'%') or name like CONCAT('%',#{0},'%')
+		)
+	</select>
+	<select id="getClubByKeyWord" resultMap="clubResultMap">
+		select *
+		from clubs ,
+		club_members where leader_stu_id = student_id and
+		(club_name
+		like
+		CONCAT('%',#{0},'%') or name like CONCAT('%',#{0},'%')
+		) limit
+		#{1},#{2} 
+     </select>
+	<insert id="addClub" parameterType="Club">
+		insert into
+		clubs(club_name,club_brief,club_type,register_date,teacher_name,leader_stu_id)
+		values(#{clubName},#{clubBrief},#{clubType},#{registerDate},#{teacherName},#{student.stuId})
+	</insert>
+	<update id="updateClub" parameterType="Club">
+		update clubs set
+		club_name=#{clubName},club_brief=#{clubBrief},club_type=#{clubType},teacher_name=#{teacherName},
+		leader_stu_id=#{student.stuId} where club_id = #{clubId}
+	</update>
+	<delete id="deleteClubById" parameterType="java.lang.String">
+		delete from clubs where club_id = #{id}
+	</delete>
+	
+	<resultMap type="Club" id="clubResultMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="clubId" column="club_id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="clubName" column="club_name" />
+		<result property="clubBrief" column="club_brief" />
+		<result property="clubType" column="club_type" />
+		<result property="registerDate" column="register_date" />
+		<result property="teacherName" column="teacher_name" />
+		<association property="student" javaType="org.itst.domain.ClubMember">
+			<id property="stuId" column="student_id" />
+			<result property="fromAcademy" column="from_academy" />
+			<result property="fromClubName" column="from_club_name" />
+			<result property="phoneNumber" column="phone_number" />
+			<result property="sex" column="sex" />
+			<result property="name" column="name" />
+			<result property="position" column="position" />
+		</association>
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

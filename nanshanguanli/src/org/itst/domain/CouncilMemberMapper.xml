@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.CouncilMemberMapper">
+
+	<select id="getCouncilMemberById"  resultMap="councilMemberResultMap"
+		resultType="ClubActivity" >
+		select * from council_members where student_id=#{0} 
+     </select>
+
+	<select id="getCouncilMembersByPage" resultMap="councilMemberResultMap">
+		select * from council_members limit #{0},#{1} 
+     </select>
+
+	<select id="getCouncilMembersCount" resultType="int">
+		select count(*) from council_members
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from 
+		 council_members 
+		 where name like CONCAT('%',#{0},'%') or department_name like CONCAT('%',#{0},'%')
+		
+	</select>
+	<select id="getCouncilMemberByKeyWord" resultMap="councilMemberResultMap">
+		select *
+		from council_members  where  name like
+		CONCAT('%',#{0},'%') or department_name like CONCAT('%',#{0},'%')
+		 limit #{1},#{2} 
+     </select>
+	<insert id="addCouncilMember" parameterType="CouncilMember">
+		insert into
+		council_members(
+				name,
+				student_id,
+				from_academy,
+				department_name,
+				phone_number,
+				position_name,
+				sex)
+		values(
+				#{name},
+				#{stuId},
+				#{fromAcademy},
+				#{departmentName},
+				#{phoneNumber},
+				#{positionName},
+				#{sex})
+	</insert>
+	<update id="updateCouncilMember" parameterType="CouncilMember">
+		update council_members set
+				name=#{name},
+				from_academy=#{fromAcademy},
+				department_name=#{departmentName},
+				phone_number=#{phoneNumber},
+				position_name=#{positionName},
+				sex=#{sex}
+		 where student_id = #{stuId}
+	</update>
+	<delete id="deleteCouncilMemberById" parameterType="java.lang.String">
+		delete from council_members where student_id = #{stuId}
+	</delete>
+	<resultMap type="CouncilMember" id="councilMemberResultMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="stuId" column="student_id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="name" column="name" />
+		<result property="fromAcademy" column="from_academy" />
+		<result property="departmentName" column="department_name" />
+		<result property="phoneNumber" column="phone_number" />
+		<result property="positionName" column="position_name" />
+		<result property="sex" column="sex" />
+		
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

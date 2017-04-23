@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="nanshanguanli"
+  id="myeclipse.1470397882690"
+  context-root="/nanshanguanli"
+  j2ee-spec="5.0"
+  archive="nanshanguanli.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

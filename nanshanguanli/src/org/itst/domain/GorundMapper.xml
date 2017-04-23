@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.GroundMapper">
+
+	<select id="getGroundByName"  resultMap="groundResultMap"
+		resultType="Ground" >
+		select * from ground where ground_name=#{0} 
+     </select>
+	<select id="getGroundById"  resultMap="groundResultMap"
+		resultType="Ground" >
+		select * from ground where Ground_id=#{0} 
+     </select>
+	<select id="getAllGround"  resultMap="groundResultMap">
+		select * from ground
+	</select>
+	<select id="getGroundByPage" resultMap="groundResultMap">
+		select * from ground limit #{0},#{1} 
+     </select>
+	<select id="getGroundCount" resultType="int">
+		select count(*) from ground
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from 
+		 ground where ground_name like CONCAT('%',#{0},'%') or using_unit like CONCAT('%',#{0},'%')
+	</select>
+	<select id="getGroundByKeyWord" resultMap="groundResultMap">
+		select * from  ground
+		 where ground_name like CONCAT('%',#{0},'%')  or using_unit like CONCAT('%',#{0},'%')
+		 limit #{1},#{2} 
+     </select>
+	<insert id="addGround" parameterType="Ground" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		     ground(
+		   		ground_name,
+		   		add_time,
+		   		using_unit,
+		   		status)
+			 values(
+			 	#{groundName},
+			 	#{addTime},
+			 	#{usingUnit},
+			 	#{status})
+	</insert>
+	<update id="updateGroundStatus" parameterType="Ground">
+		update ground set status = #{status} where ground_id = #{id}
+	</update>
+	<delete id="deleteGroundById" parameterType="java.lang.String">
+		delete from ground where ground_id = #{0}
+	</delete>
+	
+	<resultMap type="Ground" id="groundResultMap">
+		<!-- 用id属性来映射主键字段 -->
+		<id property="id" column="Ground_id" />
+		<!-- 用result属性来映射非主键字段 -->
+		<result property="groundName" column="ground_name" />
+		<result property="addTime" column="add_time" />
+		<result property="usingUnit" column="using_unit" />
+		<result property="status" column="status" />
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC  
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"  
+    "http://struts.apache.org/dtds/struts-2.3.dtd">  
+    <struts>
+    	<!-- 告诉Struts2 在运行时 使用spring创建对象 -->
+    	<constant name="struts.objectAction" value="spring"></constant>
+    	
+    	<package name="struts2" extends="struts-default">
+    	<!-- class=userAction 这里的userAction则是从applicationContext中扫描到的  这时 这个action由spring创建-->
+    		<action name="userAction" class="userAction" ></action>
+    		<action name="clubAction" class="clubAction" ></action>
+    		<action name="clubMemberAction" class="clubMemberAction" ></action>
+    		<action name="clubActivityAction" class="clubActivityAction" ></action>
+    		<action name="authAction" class="authAction" ></action>
+    		<action name="councilMemberAction" class="councilMemberAction" ></action>
+    		<action name="equipmentAction" class="equipmentAction" ></action>
+    		<action name="erAction" class="erAction" ></action>
+    		<action name="erHistoryAction" class="erHistoryAction" ></action>
+    		<action name="groundAction" class="groundAction" ></action>
+    		<action name="garAction" class="garAction" ></action>
+    		<action name="statisticsAction" class="statisticsAction" ></action>
+    	</package>
+    </struts>

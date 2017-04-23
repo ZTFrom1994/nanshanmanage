@@ -1,0 +1,155 @@
+body{
+	font-family: '微软雅黑', "Arial Unicode MS", Tahoma, Helvetica, Arial,"\5b8b\4f53", sans-serif;
+    background-color:#017EC0;  
+}
+.center-frame{
+	margin-left:auto;
+	margin-right:auto;
+	width:50%;
+	height:50%;
+	background:white;
+	z-index:1000;
+}
+.img-frame{
+	 float:left;
+	 width:50%;
+	 height:100%;
+}
+.logo-img{
+	width:100%;
+	margin-left:20px;
+	margin-top:40px;  
+	border-radius:10px;
+	
+}
+.right-frame{
+	float:left;
+	margin-top:0px;
+	margin-left:35px;
+	width:43%;
+	height:100%;
+}
+.main-div{
+	   position:relative;
+	   width:90%;
+	   height:50%;
+	   margin-left:10px;
+	   float:left;
+}
+.title{
+	    text-align:center;
+		height:43px;
+		font-size:27px;
+		height:55px;
+		width:90%;
+		color:black;
+		margin-top:20px;
+}
+#login-div .typein
+{
+	height:135px;
+	margin-top:-10px;
+}
+#reg-div .typein
+{
+	margin-top:-20px;
+	height:130px;
+}
+#changepsd-div .typein
+{
+	margin-top:-20px;
+	height:130px;
+}
+#login-div .input-line{
+	width:96%;
+	border:1px solid #017EC0;
+	padding-top:5px;
+	padding-left:5px;
+	margin-top:20px; 
+	height:30px;
+}
+#reg-div .input-line{
+	width:96%;
+	border:1px solid #017EC0;
+	padding-top:5px;
+	padding-left:5px;
+	margin-top:5px;
+	height:30px;
+}
+#changepsd-div .input-line{
+	width:inherit;
+	border:1px solid #017EC0;
+	padding-top:5px;
+	padding-left:5px;
+	margin-top:5px; 
+	height:30px;
+}
+.ainput{
+	border:hidden;
+	margin-left:8px;
+	height:20px;
+}
+
+input{
+	border:none; 
+	outline:medium;
+}
+#login-div button{
+	height:40px;    
+	width:100%; 
+	border-radius:5px;
+	background-color:#017EC0;
+	border:none;
+	color:white;
+	outline:none;
+	margin-top:0px;
+}
+#reg-div button{
+	height:40px;    
+	width:100%; 
+	border-radius:5px;
+	background-color:#017EC0;
+	border:none; 
+	color:white;
+	outline:none;
+	margin-top:40px;
+}
+#changepsd-div button{
+	height:40px;    
+	width:100%; 
+	border-radius:5px;
+	background-color:#017EC0;
+	border:none; 
+	color:white;
+	outline:none;
+	margin-top:40px;
+}
+a{
+	float:right;
+	font-size:10px; 
+	margin-right:4px;
+}
+.button:hover{
+	cursor:pointer;
+}
+a:hover{
+	cursor:pointer;
+}
+a{
+	color:#017EC0;
+}
+
+.tips{
+	   position:relative;
+	   border:3px none red;
+	   margin-left:auto;
+	   margin-right:auto;
+	   text-align:center;
+}
+
+#p-tip{
+	position:relative;
+	text-align:center;
+	margin-top:-10px;
+	color:red;
+}

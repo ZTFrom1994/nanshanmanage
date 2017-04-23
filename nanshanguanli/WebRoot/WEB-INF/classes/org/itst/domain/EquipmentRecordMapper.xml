@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itst.dao.EquipmentRecordMapper">
+
+	<select id="getEquipmentRecordById" resultMap="equipmentRecordResultMap">
+		select * from equipments e,equipment_record er where e.record_id =
+		er.record_id and er.record_id=#{id}  
+     </select>
+
+	<select id="getEquipmentRecordsByPage" resultMap="equipmentRecordResultMap">
+		select * from
+		equipments e,equipment_record er where e.record_id = er.record_id  limit #{0},#{1} 
+     </select>
+	<select id="getEquipmentRecordsByKeyWord" resultMap="equipmentRecordResultMap">
+		select *
+		from equipment_record where using_unit like CONCAT('%',#{0},'%') limit
+		#{1},#{2} 
+     </select>
+	<insert id="addEquipmentRecord" parameterType="EquipmentRecord" useGeneratedKeys="true" keyProperty="id" >
+		insert into
+		equipment_record(
+		start_time,
+		end_time,
+		number,
+		using_for,
+		petitioner,
+		using_unit,
+		borrowed_type,
+		contact
+		) values(
+		#{startTime},
+		#{endTime},
+		#{number},
+		#{usingFor},
+		#{petitioner},
+		#{usingUnit},
+		#{borrowedType},
+		#{contact}
+		)
+	</insert>
+	<select id="getEquipmentRecordCount" resultType="int">
+		select count(*)
+		from equipment_record
+	</select>
+	<select id="getKeySearchCount" resultType="int">
+		select count(*) from
+		equipment_record where using_unit like CONCAT('%',#{0},'%')
+	</select>
+	<delete id="deleteRecordById" >
+		delete from
+		equipment_record where record_id = #{0}
+	</delete>
+	<resultMap type="EquipmentRecord" id="equipmentRecordResultMap">
+		<id property="id" column="record_id" />
+		<result property="startTime" column="start_time" />
+		<result property="endTime" column="end_time" />
+		<result property="number" column="number" />
+		<result property="usingFor" column="using_for" />
+		<result property="petitioner" column="petitioner" />
+		<result property="usingUnit" column="using_unit" />
+		<result property="borrowedType" column="borrowed_type" />
+		<result property="contact" column="contact" />
+		<collection property="eqList" ofType="Equipment" column="record_id">
+			<id property="id" column="equipment_id" />
+			<result property="type" column="type" />
+			<result property="addTime" column="add_time" />
+			<result property="status" column="status" />
+		</collection>
+	</resultMap>
+</mapper>
+  
+ 
+ 
+ 
+ 
+ 

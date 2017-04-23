@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- 
+ 为这个mapper指定一个唯一的namespace，
+ namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+ 例如namespace="me.gacl.mapping.userMapper"就是
+ me.gacl.mapping(包名)+userMapper(userMapper.xml文件去除后缀)
+  -->
+  <!-- namespace 是用来绑定dao接口的，绑定了之后，自动帮你实现这个接口 -->
+ <mapper namespace="org.itst.dao.UserMapper">
+      <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，
+      		不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
+      		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回
+     		User类就是users表所对应的实体类-->     
+   	
+   	<!-- 1. 根据id查询得到一个user对象 -->
+     <select id="getUserById" parameterType="java.lang.String"  resultMap="userResultMap"
+         resultType="User">
+         select * from users where id=#{id}
+     </select>
+     <select id="getUserByName" parameterType="java.lang.String"  resultMap="userResultMap">
+         select * from users u,system_auth a where u.username=#{username} and u.auth_name = a.auth_name
+     </select>
+     <select id="getAllUsers" resultType="User" resultMap="userResultMap">
+     	select * from users
+     </select>
+     <select id="getUsersByPage" resultMap="userResultMap">
+     	select * from users u,system_auth a where u.auth_name = a.auth_name limit #{0},#{1}
+     </select>
+     <select id="getUsersCount" resultType="int">
+     	select count(*) from users
+     </select>
+     <select id="getUsersByKeyWord" resultMap="userResultMap">
+     	select * from users where username like CONCAT('%',#{0},'%') limit #{1},#{2}
+     </select>
+     <select id="getAuthByInvno" parameterType="java.lang.String" resultType="java.lang.String">
+     	select authName from invno where invno_name = #{0}
+     </select>
+   	<insert id="addUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+    		insert into users(username,password,register_date,auth_name) values(#{username},#{password},#{registerDate},#{auth.authName})
+   	</insert>
+     <delete id="deleteUserById" parameterType="java.lang.String"  >
+     		delete from users where id = #{id}
+     </delete> 
+     <update id="updateUser" parameterType="User">
+     	update users set auth_name = #{auth.authName} where id = #{id}
+     </update>
+     <!-- 
+     	解决办法一:
+     	 通过在查询的sql语句中定义字段名的别名，让字段名的别名和实体类的属性名一致，
+     	 这样就可以表的字段名和实体类的属性名一一对应上了，
+     	 这种方式是通过在sql语句中定义别名来解决字段名和属性名的映射关系的。
+     	例如：select a_username username ,a_password password from users where _id = #{id};
+　　		解决办法二: 
+		通过<resultMap>来映射字段名和实体类属性名的一一对应关系。
+		这种方式是使用MyBatis提供的解决方式来解决字段名和属性名的映射关系的。
+      -->
+     <resultMap type="User" id="userResultMap">
+         <!-- 用id属性来映射主键字段 -->
+         <id property="id" column="id"/>
+         <!-- 用result属性来映射非主键字段 -->
+         <result property="username" column="username"/>
+         <result property="password" column="password"/>
+         <result property="registerDate" column="register_date"/>
+         <association property="auth" column="auth_name" javaType="Auth">
+         	<id property="authId" column="auth_id"/>
+         	<result property="authName" column="auth_name"/>
+         	<result property="addAuth" column="add_auth"/>
+         	<result property="deleteAuth" column="delete_auth"/>
+         	<result property="updateAuth" column="update_auth"/>
+         	<result property="searchAuth" column="search_auth"/>
+         </association>
+     </resultMap>
+ </mapper>
+  
+ 
+ 
+ 
+ 
+ 

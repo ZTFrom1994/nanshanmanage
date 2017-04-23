@@ -1,0 +1,41 @@
+#north{
+	border:0px solid red;
+	height:80px;
+	overflow:inherit;
+}
+#west{
+	background:#F2F2F2;
+	width:300px;
+}
+#center{
+	padding:0px;
+	background:#eee;
+}
+#south{
+	border:0px solid red;
+	color:white;
+	overflow:inherit;
+	height:25px;
+	text-align:center;
+	padding-top:7px
+}
+#show-info{
+	float:right;
+	margin-right:10px;
+	width:230px;
+	color:white;
+	margin-top:55px;
+}
+img{
+	float:left;
+}
+#show-info>a:hover{
+	cursor:pointer;
+	text-decoration: underline;
+}
+#logout{
+	margin-left:10px;
+}
+#myauth{
+	margin-left:20px;
+}

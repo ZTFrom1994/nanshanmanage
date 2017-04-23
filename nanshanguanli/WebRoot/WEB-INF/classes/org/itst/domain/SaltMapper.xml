@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="org.itst.dao.SaltMapper">
+   	
+     <select id="getSalt" parameterType="int"  resultMap="saltResultMap"
+         resultType="Salt"> 
+         select * from salt where user_id=#{id} 
+     </select>
+     <insert id="addSalt" parameterType="Salt"  >
+     	insert into salt(salt_value,user_id) values(#{saltValue},#{userId})
+     </insert>
+     <delete id="deleteSaltById" parameterType="java.lang.String">
+     	delete from salt where user_id = #{id}
+     </delete>
+     <resultMap type="Salt" id="saltResultMap">
+         <result property="userId" column="user_id"/>
+         <result property="saltValue" column="salt_value"/>
+     </resultMap>
+ </mapper>
+  
+ 
+ 
+ 
+ 
+ 
